@@ -1,0 +1,132 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+#root {
+  max-width: 1280px;
+  max-height: 1280px;
+  margin: 0 auto;
+  /* overflow-y:hidden; */
+  overflow-x:hidden;
+  height: 100vh;
+  width: 100%; 
+}
+body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* background-color:#3b9b56; */
+}
+nav{
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+}
+.wrapper{ 
+  width: 500px;
+  margin-left: 19rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+}
+.wrapper h3{
+  text-align: center;
+}
+.wrapper-authenticated{
+  width: 1000px;
+  position: relative;
+  /* background -color: black; */
+}
+.wrapper-authenticated .row{
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  align-items: first baseline;
+}
+
+
+.wrapper-index-users table th{
+  text-align: center;
+}
+.wrapper-index-users table tbody{
+  text-align: left;
+}
+
+
+.wrapper .card-body,.wrapper .card-body{
+  padding: 2rem 1.75rem 2rem 1.75rem;
+  
+}
+.wrapper-authenticated .btn-wrapper{
+  display: flex;
+  flex-direction: row;
+  gap: .5rem;
+  justify-content: center;
+  padding-bottom: 0px;
+  margin: 0px;
+}
+.wrapper-authenticated .info-wrapper{
+  padding: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+}
+
+.card-dashboard {
+  width: 630px;
+}
+.card-sidebar{
+  width: 300px;
+}
+
+.card-menu{
+  text-align: center;
+}
+.card-header.header-data{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 1rem; */
+}
+/* .wrapper-authenticated .card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+} */
+.header-data span{
+  flex-grow: 1;
+}
+.wrapper h3{
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.wrapper , .wrapper input{
+  letter-spacing: .5px;
+}
+.card-body{
+  display: flex;
+  flex-direction: column;
+
+}
+.card-body-barang .card-body-content{
+  margin-top: -1.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: -1.5rem;
+  gap: .5em;
+}
+
+.card-body-icon img{
+  width: 40px;
+  background-color: transparent;
+  cursor: pointer;
+}

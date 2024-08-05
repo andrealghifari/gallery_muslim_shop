@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(100)
+  role       String   @db.VarChar(20)
+  email      String   @unique(map: "email") @db.VarChar(50)
+  password   String   @db.VarChar(255)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Barang {
+  id            Int           @id @default(autoincrement())
+  name          String        @db.VarChar(100)
+  quantity      Int
+  type          String        @db.VarChar(50)
+  value         Float?
+  supplier_code Int
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  transaction   Transaction[]
+
+  @@map("barang")
+}
+
+model Supplier {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(100)
+  location     String        @db.VarChar(255)
+  phone_number String         @db.VarChar(12)
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+  transaction  Transaction[]
+
+  @@map("supplier")
+}
+
+model Transaction {
+  id                Int       @id @default(autoincrement())
+  id_barang         Int?
+  id_supplier       Int?
+  transaction_name  String    @db.VarChar(255)
+  transaction_value Int
+  transaction_date  DateTime  @default(now())
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  fkey_supplier     Supplier? @relation(fields: [id_barang], references: [id])
+  fkey_barang       Barang?   @relation(fields: [id_supplier], references: [id])
+
+  @@map("transaction")
+}
