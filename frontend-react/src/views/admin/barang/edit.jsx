@@ -16,12 +16,13 @@ import { useEffect, useState } from "react";
 import api from "../../../services/api";
 import Cookies from "js-cookie";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 
 const BarangEdit = () => {
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [type, setType] = useState("");
-  const [supplierCode, setSupplierCode] = useState(0);
+  const [supplierCode, setSupplierCode] = useState("");
   const [value, setValue] = useState(0);
   const [validate, setValidate] = useState([]);
   const { id } = useParams();
@@ -47,7 +48,6 @@ const BarangEdit = () => {
           setName(response.data.data.name);
           setQuantity(response.data.data.quantity);
           setType(response.data.data.type);
-          //   setSupplierCode(response.data.data.supplierCode);
           setValue(response.data.data.value);
         })
         .catch((error) =>
@@ -135,7 +135,7 @@ const BarangEdit = () => {
                 <TextField
                   id="value"
                   label="Harga modal/pc"
-                  value={formatRupiah(value)}
+                  value={value}
                   onChange={(e) => setValue(e.target.value)}
                   error={!!getErrorMessage("value")}
                   helperText={getErrorMessage("value")}

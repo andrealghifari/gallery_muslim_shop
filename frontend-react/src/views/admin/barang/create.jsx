@@ -51,7 +51,6 @@ const BarangCreate = () => {
         });
     }
   };
-  console.log(validate);
 
   return (
     <div className="container mb-5 mt-5 wrapper-authenticated">
@@ -66,7 +65,7 @@ const BarangCreate = () => {
               </Link>
             </div>
             <div className="card-body-content">
-              <img src={extend_image} alt="goods" style={{ width: "230px" }} />
+              <img src={extend_image} alt="goods"/>
               <Box
                 component={"form"}
                 sx={{

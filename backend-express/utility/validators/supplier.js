@@ -20,7 +20,9 @@ const validateSupplier = [
     .withMessage("Location must be string"),
   body("phone_number")
     .notEmpty()
-    .withMessage("Phone Number is required")   
+    .withMessage("Phone Number is required")
+    .isInt()
+    .withMessage("Phone Number must be numbers")
     .isLength({ max: 12 })
     .withMessage("Phone Number length max is 12"),
 ];

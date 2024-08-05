@@ -116,17 +116,31 @@ nav{
   flex-direction: column;
 
 }
-.card-body-barang .card-body-content{
-  margin-top: -1.5rem;
+.card-body-supplier{
+  gap: 3.5rem;
+}
+.card-body-barang .card-body-content, .card-body-supplier .card-body-content{
+  margin-top: -2rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: -1.5rem;
+  margin-left: -1rem;
   gap: .5em;
+}
+.card-body-supplier .card-body-content{
+  margin-top: -3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* margin-left: -1rem; */
+  gap: 2em;
 }
 
 .card-body-icon img{
   width: 40px;
   background-color: transparent;
   cursor: pointer;
+}
+.card-body-content img{
+  width: 180px;
 }

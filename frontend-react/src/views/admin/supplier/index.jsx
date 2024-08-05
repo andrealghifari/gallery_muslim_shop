@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { Alert, Box, IconButton, Snackbar } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
@@ -7,34 +7,72 @@ import {
   GridToolbarExport,
   GridToolbarColumnsButton,
   GridToolbarFilterButton,
-  GridToolbarDensitySelector
+  GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import api from "../../../services/api";
 import SidebarMenu from "../../../components/SidebarMenu";
 
 const SupplierIndex = () => {
+  const location = useLocation();
+  const [alert, setAlert] = useState(false);
   const [rows, setRows] = useState([]);
+  const [deleted, setDeleted] = useState(false);
+  const [deletedMessage, setDeletedMessage] = useState("");
   const [columns] = useState([
     { field: "name", headerName: "Supplier Name", width: 150 },
     { field: "location", headerName: "Location", width: 150 },
     { field: "phone_number", headerName: "Phone Number", width: 150 },
-    {field : "action", headerName : "Action", renderCell: (params) => (
-      <div>
-        <IconButton color="primary">
-          <EditIcon></EditIcon>
-        </IconButton>
-        <IconButton color="error">
-          <DeleteIcon></DeleteIcon>
-        </IconButton>
-      </div>
-    )}
+    {
+      field: "action",
+      headerName: "Action",
+      renderCell: (params) => (
+        <div>
+          <IconButton
+            color="primary"
+            component={Link}
+            to={`/admin/supplier/edit/${params.row.id}`}
+          >
+            <EditIcon></EditIcon>
+          </IconButton>
+          <IconButton color="error" onClick={() => deleteData(params.row.id)}>
+            <DeleteIcon></DeleteIcon>
+          </IconButton>
+        </div>
+      ),
+    },
   ]);
+
   useEffect(() => {
     fetchDataSupplier();
   }, []);
+
+  useEffect(() => {
+    if (
+      (location.state && location.state.createdSupplier) ||
+      (location.state && location.state.updatedSupplier)
+    ) {
+      setAlert(true);
+      const timer = setTimeout(() => {
+        setAlert(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    if (deleted) {
+      setDeleted(true);
+      const timer = setTimeout(() => {
+        setDeleted(false);
+      }, 5000);
+      //cleanup timer
+      return () => clearTimeout(timer);
+    }
+  }, [deleted]);
+
   const fetchDataSupplier = async () => {
     const token = Cookies.get("token");
     api.defaults.headers.common["Authorization"] = token;
@@ -51,12 +89,26 @@ const SupplierIndex = () => {
   const CustomToolbar = () => {
     return (
       <GridToolbarContainer>
-        <GridToolbarColumnsButton/>
-        <GridToolbarDensitySelector/>
-        <GridToolbarFilterButton/>
+        <GridToolbarColumnsButton />
+        <GridToolbarDensitySelector />
+        <GridToolbarFilterButton />
         <GridToolbarExport csvOptions={{ fileName: "Data Suppliers" }} />
       </GridToolbarContainer>
     );
+  };
+  const deleteData = async (id) => {
+    const token = Cookies.get("token");
+    api.defaults.headers.common["Authorization"] = token;
+    if (token) {
+      await api
+        .delete(`/api/admin/supplier/${id}`)
+        .then((response) => {
+          setDeleted(true);
+          setDeletedMessage(response.data.message);
+          fetchDataSupplier();
+        })
+        .catch((error) => console.error(error));
+    }
   };
   return (
     <div className="container mb-5 mt-5 wrapper-authenticated">
@@ -67,6 +119,24 @@ const SupplierIndex = () => {
             <span>Data Supplier</span>
           </div>
           <div className="card-body">
+            {alert && (
+              <Snackbar open>
+                <Alert
+                  variant="filled"
+                  severity={location.state.createdSupplier ? "success" : "info"}
+                >
+                  {location.state.createdSupplier || location.state.updatedSupplier}
+                </Alert>
+              </Snackbar>
+            )}
+            {deleted && (
+              <Snackbar open>
+                <Alert severity="error" variant="filled" sx={{ width: "100%" }}>
+                  {deletedMessage}
+                </Alert>
+              </Snackbar>
+            )}
+            {}
             <div className="info-wrapper">
               <div className="btn-wrapper">
                 <Link

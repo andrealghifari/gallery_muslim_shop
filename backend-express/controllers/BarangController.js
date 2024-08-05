@@ -22,7 +22,7 @@ const createBarang = async (req, res) => {
     });
     return res.status(201).send({
       success: true,
-      message: `Barang ${data.name} has just added!`,
+      message: `Barang ${data.name} has created!`,
       data: data,
     });
   } catch (error) {

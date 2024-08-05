@@ -59,12 +59,12 @@ const createSupplier = async (req, res) => {
         location: req.body.location,
         phone_number: req.body.phone_number,
       },
-      select: { name: true, location: true, phone_number: true },
+      select: { name: true },
     });
 
     return res.status(200).send({
       success: true,
-      message: "Successfully created a supplier",
+      message: `Successfully created supplier ${data.name}`,
       data: data,
     });
   } catch (error) {
@@ -118,7 +118,7 @@ const deleteSupplier = async (req, res) => {
       });
     return res.status(200).send({
       success: true,
-      message: `Successfully delete supplier ${data.name}`,
+      message: `Successfully deleted supplier ${data.name}`,
     });
   } catch (error) {
     callBackError(res, error);
