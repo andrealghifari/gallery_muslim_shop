@@ -16,7 +16,6 @@ import { useEffect, useState } from "react";
 import api from "../../../services/api";
 import Cookies from "js-cookie";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 
 const BarangEdit = () => {
   const [name, setName] = useState("");
@@ -44,7 +43,6 @@ const BarangEdit = () => {
       await api
         .post(`/api/admin/barang/${id}`)
         .then((response) => {
-          console.log(response);
           setName(response.data.data.name);
           setQuantity(response.data.data.quantity);
           setType(response.data.data.type);
@@ -97,7 +95,7 @@ const BarangEdit = () => {
               </Link>
             </div>
             <div className="card-body-content">
-              <img src={imgBarang} alt="goods" style={{ width: "230px" }} />
+              <img src={imgBarang} alt="goods" />
               <Box
                 onSubmit={handleSubmit}
                 component={"form"}

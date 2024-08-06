@@ -59,7 +59,7 @@ const BarangIndex = () => {
     { field: "quantity", headerName: "Jumlah Stock", width: 150 , headerAlign : "center", align : "right"},
     {
       field: "value",
-      headerName: "Harga Jual / Modal",
+      headerName: "Harga Satuan",
       width: 150,
       valueFormatter: (value) => {
         return formatRupiah(value);

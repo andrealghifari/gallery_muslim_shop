@@ -23,11 +23,16 @@ const validateBarang = [
     .withMessage("Jumlah is required")
     .isInt()
     .withMessage("Jumlah must be numbers"),
+  body("value")
+    .notEmpty()
+    .withMessage("Harga Satuan is required")
+    .isNumeric()
+    .withMessage("Harga Satuan must be numbers"),
   body("supplier_code")
     .notEmpty()
-    .withMessage("Supplier Code is required")
+    .withMessage("Supplier is required")
     .isInt()
-    .withMessage("Supplier Code must be integer"),
+    .withMessage("Supplier must be integer"),
 ];
 
-module.exports = {validateBarang}
+module.exports = { validateBarang };

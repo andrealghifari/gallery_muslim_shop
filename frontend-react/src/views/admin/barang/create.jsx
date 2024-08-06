@@ -21,6 +21,7 @@ const BarangCreate = () => {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [value, setValue] = useState("");
   const [supplierCode, setSupplierCode] = useState("");
   const [validate, setValidate] = useState([]);
   const navigate = useNavigate();
@@ -31,7 +32,6 @@ const BarangCreate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(supplierCode);
     const token = Cookies.get("token");
     api.defaults.headers.common["Authorization"] = token;
     if (token) {
@@ -41,9 +41,12 @@ const BarangCreate = () => {
           type: type,
           quantity: quantity,
           supplier_code: supplierCode,
+          value: value,
         })
         .then((response) => {
-          navigate("/admin/barang", {state: {createdBarang : `Barang ${name} has created!`}});
+          navigate("/admin/barang", {
+            state: { createdBarang: `Barang ${name} has created!` },
+          });
         })
         .catch((error) => {
           console.error("There's an error: ", error.response.data);
@@ -65,7 +68,7 @@ const BarangCreate = () => {
               </Link>
             </div>
             <div className="card-body-content">
-              <img src={extend_image} alt="goods"/>
+              <img src={extend_image} alt="goods" />
               <Box
                 component={"form"}
                 sx={{
@@ -87,7 +90,7 @@ const BarangCreate = () => {
                 />
                 <TextField
                   id="quantity"
-                  label="Jumlah Barang"
+                  label="Jumlah"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   error={!!getErrorMessage("quantity")}
@@ -95,11 +98,19 @@ const BarangCreate = () => {
                 />
                 <TextField
                   id="type"
-                  label="Tipe Barang"
+                  label="Tipe"
                   value={type}
                   onChange={(e) => setType(e.target.value)}
                   error={!!getErrorMessage("type")}
                   helperText={getErrorMessage("type")}
+                />
+                <TextField
+                  id="value"
+                  label="Harga Satuan"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                  error={!!getErrorMessage("value")}
+                  helperText={getErrorMessage("value")}
                 />
                 <FormControl
                   sx={{ m: 1, width: "35ch" }}

@@ -32,7 +32,11 @@ const SidebarMenu = () => {
             Dashboard
           </Link>
           {user.role == "Admin" && (
-            <span>             
+            <span>
+              <Link to={"/admin/users"} className="list-group-item">
+                {" "}
+                User Profile
+              </Link>
               <Link to={"/admin/barang"} className="list-group-item">
                 {" "}
                 Data Barang
@@ -43,14 +47,17 @@ const SidebarMenu = () => {
               <Link to={"/admin/supplier"} className="list-group-item">
                 Supplier Barang
               </Link>
-              <Link to={"/admin/users"} className="list-group-item">
-                {" "}
-                User Profile
+            </span>
+          )}
+          {user.role == "Supplier" && (
+            <span>              
+              <Link to={"/admin/supplier"} className="list-group-item">
+                Supplier Barang
               </Link>
             </span>
           )}
           {user.role == "Guest" && (
-            <Link to={"/admin/guest/order"} className="list-group-item" >
+            <Link to={"/admin/guest/order"} className="list-group-item">
               Order Clothes
             </Link>
           )}

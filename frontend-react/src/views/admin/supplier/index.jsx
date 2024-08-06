@@ -17,37 +17,48 @@ import SidebarMenu from "../../../components/SidebarMenu";
 
 const SupplierIndex = () => {
   const location = useLocation();
+  const [checkUser, setCheckUser] = useState({});
   const [alert, setAlert] = useState(false);
   const [rows, setRows] = useState([]);
   const [deleted, setDeleted] = useState(false);
   const [deletedMessage, setDeletedMessage] = useState("");
-  const [columns] = useState([
-    { field: "name", headerName: "Supplier Name", width: 150 },
-    { field: "location", headerName: "Location", width: 150 },
-    { field: "phone_number", headerName: "Phone Number", width: 150 },
-    {
-      field: "action",
-      headerName: "Action",
-      renderCell: (params) => (
-        <div>
-          <IconButton
-            color="primary"
-            component={Link}
-            to={`/admin/supplier/edit/${params.row.id}`}
-          >
-            <EditIcon></EditIcon>
-          </IconButton>
-          <IconButton color="error" onClick={() => deleteData(params.row.id)}>
-            <DeleteIcon></DeleteIcon>
-          </IconButton>
-        </div>
-      ),
-    },
-  ]);
-
+  const [columns, setColumns] = useState([]);
   useEffect(() => {
+    setCheckUser(JSON.parse(Cookies.get("user")));
     fetchDataSupplier();
   }, []);
+
+  useEffect(() => {
+    setColumns([
+      { field: "name", headerName: "Supplier Name", width: 150 },
+      { field: "location", headerName: "Location", width: 150 },
+      { field: "phone_number", headerName: "Phone Number", width: 150 },
+      {
+        field: "action",
+        headerName: "Action",
+        renderCell: (params) =>
+          checkUser.role == "Admin" ? (
+            <div>
+              <IconButton
+                color="primary"
+                component={Link}
+                to={`/admin/supplier/edit/${params.row.id}`}
+              >
+                <EditIcon></EditIcon>
+              </IconButton>
+              <IconButton
+                color="error"
+                onClick={() => deleteData(params.row.id)}
+              >
+                <DeleteIcon></DeleteIcon>
+              </IconButton>
+            </div>
+          ) : (
+            <div style={{ fontStyle: "italic" }}>Disabled</div>
+          ),
+      },
+    ]);
+  }, [checkUser]);
 
   useEffect(() => {
     if (
@@ -79,7 +90,6 @@ const SupplierIndex = () => {
     await api
       .get("api/admin/supplier")
       .then((response) => {
-        console.log(response.data.data);
         setRows(response.data.data);
       })
       .catch((errors) => {
@@ -125,7 +135,8 @@ const SupplierIndex = () => {
                   variant="filled"
                   severity={location.state.createdSupplier ? "success" : "info"}
                 >
-                  {location.state.createdSupplier || location.state.updatedSupplier}
+                  {location.state.createdSupplier ||
+                    location.state.updatedSupplier}
                 </Alert>
               </Snackbar>
             )}

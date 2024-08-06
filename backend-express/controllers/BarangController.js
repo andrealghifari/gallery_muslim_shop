@@ -18,6 +18,7 @@ const createBarang = async (req, res) => {
         quantity: Number(req.body.quantity),
         type: req.body.type,
         supplier_code: Number(req.body.supplier_code),
+        value : Number(req.body.value)
       },
     });
     return res.status(201).send({

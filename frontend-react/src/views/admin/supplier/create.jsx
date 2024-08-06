@@ -26,7 +26,6 @@ const SupplierCreate = () => {
           phone_number: contact,
         })
         .then((response) => {
-          console.log(response);
           navigate("/admin/supplier", {state : {createdSupplier : response.data.message}})
         })
         .catch((error) => {
@@ -39,7 +38,6 @@ const SupplierCreate = () => {
     const checkError = validate.find((error) => error.path === field);
     return checkError ? checkError.msg : "";
   };
-  console.log(validate);
 
   return (
     <div className="container mb-5 mt-5 wrapper-authenticated">

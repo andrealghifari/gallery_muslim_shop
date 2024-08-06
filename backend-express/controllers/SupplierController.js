@@ -97,7 +97,7 @@ const updateSupplier = async (req, res) => {
 
     return res.status(200).send({
       success: true,
-      message: `Successfully update supplier ID ${id}`,
+      message: `Successfully update supplier ${data.name}`,
     });
   } catch (error) {
     callBackError(res, error);
