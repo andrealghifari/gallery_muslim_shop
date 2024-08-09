@@ -1,53 +1,63 @@
 import { Box, Button, TextField } from "@mui/material";
-import supplierIcon from "../../../assets/supplier.png";
-import imgArrowLeft from "../../../assets/arrow-left-2.png";
+import supplierIcon from "../../assets/supplier.png";
+import imgArrowLeft from "../../assets/arrow-left-2.png";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import SidebarMenu from "../../../components/SidebarMenu";
+import SidebarMenu from "../../components/SidebarMenu";
 import { useEffect, useState } from "react";
-import api from "../../../services/api";
+import api from "../../services/api";
 import Cookies from "js-cookie";
 
-const SupplierCreate = () => {
+const SupplierEdit = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [contact, setContact] = useState("");
-  const [validate, setValidate] = useState([]);
-  const { id } = useParams();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const token = Cookies.get("token");
     if (token) {
       api.defaults.headers.common["Authorization"] = token;
       api
-        .post(`/api/admin/supplier`, {
+        .put(`/api/supplier/${id}`, {
           name: name,
           location: location,
           phone_number: contact,
         })
         .then((response) => {
-          navigate("/admin/supplier", {state : {createdSupplier : response.data.message}})
+            navigate("/supplier", {state : {updatedSupplier : response.data.message}})
         })
-        .catch((error) => {
-          console.error(error);
-          setValidate(error.response.data.error);
-        });
+        .catch((error) => console.error(error));
     }
   };
-  const errorGetMessage = (field) => {
-    const checkError = validate.find((error) => error.path === field);
-    return checkError ? checkError.msg : "";
+  const fetchDetailSupplier = () => {
+    const token = Cookies.get("token");
+    if (token) {
+      api.defaults.headers.common["Authorization"] = token;
+      api
+        .post(`/api/supplier/${id}`)
+        .then((response) => {
+          setName(response.data.data.name);
+          setLocation(response.data.data.location);
+          setContact(response.data.data.phone_number);
+        })
+        .catch((error) => console.error(error));
+    }
   };
+  useEffect(() => {
+    fetchDetailSupplier();
+  }, []);
 
   return (
     <div className="container mb-5 mt-5 wrapper-authenticated">
       <div className="row">
         <SidebarMenu />
         <div className="card card-dashboard rounded shadow-lg border-0">
-          <div className="card-header">Create Supplier</div>
+          <div className="card-header">Edit Supplier</div>
           <div className="card-body card-body-supplier">
             <div className="card-body-icon">
-              <Link>
+              <Link to={"/supplier"}>
                 <img src={imgArrowLeft} alt="" />
               </Link>
             </div>
@@ -69,8 +79,6 @@ const SupplierCreate = () => {
                   label="Supplier Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  error={!!errorGetMessage("name")}
-                  helperText={errorGetMessage("name")}
                 ></TextField>
 
                 <TextField
@@ -78,16 +86,12 @@ const SupplierCreate = () => {
                   label="Supplier Location"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  error={!!errorGetMessage("location")}
-                  helperText={errorGetMessage("location")}
                 ></TextField>
                 <TextField
                   id="phone_number"
                   label="Contact"
                   value={contact}
                   onChange={(e) => setContact(e.target.value)}
-                  error={!!errorGetMessage("phone_number")}
-                  helperText={errorGetMessage("phone_number")}
                 ></TextField>
                 <Button
                   sx={{ margin: 1, width: "42ch" }}
@@ -104,4 +108,5 @@ const SupplierCreate = () => {
     </div>
   );
 };
-export default SupplierCreate;
+
+export default SupplierEdit;

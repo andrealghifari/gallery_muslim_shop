@@ -44,22 +44,24 @@ const SidebarMenu = () => {
               <Link to={"/admin/transaksi"} className="list-group-item">
                 Data Transaksi Harian
               </Link>
-              <Link to={"/admin/supplier"} className="list-group-item">
+              <Link to={"/supplier"} className="list-group-item">
                 Supplier Barang
               </Link>
             </span>
           )}
           {user.role == "Supplier" && (
-            <span>              
-              <Link to={"/admin/supplier"} className="list-group-item">
+            <span>
+              <Link to={"/supplier"} className="list-group-item">
                 Supplier Barang
               </Link>
             </span>
           )}
-          {user.role == "Guest" && (
-            <Link to={"/admin/guest/order"} className="list-group-item">
-              Order Clothes
-            </Link>
+          {user.role == "Customer" && (
+            <span>
+              <Link to={"/customer/order"} className="list-group-item">
+                Order Products
+              </Link>             
+            </span>
           )}
           <a
             onClick={logout}

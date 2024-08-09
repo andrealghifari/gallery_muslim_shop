@@ -12,8 +12,8 @@ import {
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
-import api from "../../../services/api";
-import SidebarMenu from "../../../components/SidebarMenu";
+import api from "../../services/api";
+import SidebarMenu from "../../components/SidebarMenu";
 
 const SupplierIndex = () => {
   const location = useLocation();
@@ -42,7 +42,7 @@ const SupplierIndex = () => {
               <IconButton
                 color="primary"
                 component={Link}
-                to={`/admin/supplier/edit/${params.row.id}`}
+                to={`/supplier/edit/${params.row.id}`}
               >
                 <EditIcon></EditIcon>
               </IconButton>
@@ -88,7 +88,7 @@ const SupplierIndex = () => {
     const token = Cookies.get("token");
     api.defaults.headers.common["Authorization"] = token;
     await api
-      .get("api/admin/supplier")
+      .get("api/supplier")
       .then((response) => {
         setRows(response.data.data);
       })
@@ -111,7 +111,7 @@ const SupplierIndex = () => {
     api.defaults.headers.common["Authorization"] = token;
     if (token) {
       await api
-        .delete(`/api/admin/supplier/${id}`)
+        .delete(`/api/supplier/${id}`)
         .then((response) => {
           setDeleted(true);
           setDeletedMessage(response.data.message);
@@ -151,7 +151,7 @@ const SupplierIndex = () => {
             <div className="info-wrapper">
               <div className="btn-wrapper">
                 <Link
-                  to={"/admin/supplier/create"}
+                  to={"/supplier/create"}
                   className="btn btn-success btn-sm"
                 >
                   Create

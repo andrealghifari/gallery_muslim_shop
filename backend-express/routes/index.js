@@ -53,9 +53,9 @@ router.put("/admin/barang/:id", verifyToken, validateBarang, editBarang);
 router.post("/admin/barang/:id", verifyToken, findBarangById);
 router.delete("/admin/barang/:id", verifyToken, deleteBarang);
 //Supplier Routes
-router.get("/admin/supplier", verifyToken, findSuppliers);
-router.post("/admin/supplier", verifyToken, validateSupplier, createSupplier);
-router.post("/admin/supplier/:id", verifyToken, findSupplierById);
-router.put("/admin/supplier/:id", verifyToken, validateSupplier,updateSupplier)
-router.delete("/admin/supplier/:id", verifyToken, deleteSupplier);
+router.get("/supplier", verifyToken, findSuppliers);
+router.post("/supplier", verifyToken, validateSupplier, createSupplier);
+router.post("/supplier/:id", verifyToken, findSupplierById);
+router.put("/supplier/:id", verifyToken, validateSupplier,updateSupplier)
+router.delete("/supplier/:id", verifyToken, deleteSupplier);
 module.exports = router;
